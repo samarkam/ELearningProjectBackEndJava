@@ -1,5 +1,7 @@
 package com.projet.ihm.repo.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -16,7 +18,7 @@ public class Ressource  extends AbstractEntity{
 	 */
 	private static final long serialVersionUID = 681706136608017139L;
 
-	@Column(nullable=false, unique=true)
+	@Column(nullable=false, unique=false)
 	private String titre;
 	
 	@Column(nullable=false)
@@ -40,7 +42,23 @@ public class Ressource  extends AbstractEntity{
     
     public enum TypeRessource{
     	
-    	PDF,IMAGE,VIDEO
+    	PDF,IMAGE,VIDEO;
+    	
+    	public static TypeRessource getType(String inputType) {
+    		if(StringUtils.isBlank(inputType)) {
+    	        return null;
+
+    		}
+    		switch (inputType.toUpperCase()) {
+	    	    case "PDF": return PDF ;
+	    	    case "IMAGE": return IMAGE;
+	    	    case "VIDEO": return VIDEO;
+	    	    default:
+	    	        return null;
+	    	}
+    	}
+    	
+    	
     }
 
     

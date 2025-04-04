@@ -71,6 +71,18 @@ public class Cours  extends AbstractEntity{
 	
 	
 
+	public boolean isActive() {
+		return isActive;
+	}
+
+
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
+
 	public String getTitre() {
 		return titre;
 	}

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.projet.ihm.controller.dto.cours.InscriptionCoursDto;
+import com.projet.ihm.controller.dto.cours.ScoreChapitreDTO;
 import com.projet.ihm.repo.model.Etudiant;
 
 
@@ -29,11 +31,11 @@ public class EtudiantDto {
 
     private String niveauEtude;
     
-    private List<ScoreChapitreDto> scoreChapitreList;
+    private List<ScoreChapitreDTO> scoreChapitreList;
     private boolean isBlocked;
 
 	public EtudiantDto(Long id, String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details, boolean isBlocked,String niveauEtude,List<InscriptionCoursDto> inscriptionCoursList,List<ScoreChapitreDto> scoreChapitreList) {
+			String email, String details, boolean isBlocked,String niveauEtude,List<InscriptionCoursDto> inscriptionCoursList,List<ScoreChapitreDTO> scoreChapitreList) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -50,12 +52,18 @@ public class EtudiantDto {
 	}
 
 	
-	public static EtudiantDto map(Etudiant utilisateur) {
+	public static EtudiantDto mapWithInscriptionAndScoreChapters(Etudiant utilisateur) {
 		return utilisateur == null ? null : new EtudiantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
 				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
 				utilisateur.getNiveauEtude(),
 				utilisateur.getInscriptionCoursList() == null ? null : utilisateur.getInscriptionCoursList().stream().map(InscriptionCoursDto::map).collect(Collectors.toList()),
-				utilisateur.getScoreChapitreList()	==null ? null : 	utilisateur.getScoreChapitreList().stream().map(ScoreChapitreDto::map).collect(Collectors.toList()));
+				utilisateur.getScoreChapitreList()	==null ? null : 	utilisateur.getScoreChapitreList().stream().map(ScoreChapitreDTO::map).collect(Collectors.toList()));
+	}
+	public static EtudiantDto map(Etudiant utilisateur) {
+		return utilisateur == null ? null : new EtudiantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
+				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
+				utilisateur.getNiveauEtude(),
+				null,null);
 	}
 	
 	public Long getId() {
@@ -151,12 +159,12 @@ public class EtudiantDto {
 	}
 
 
-	public List<ScoreChapitreDto> getScoreChapitreList() {
+	public List<ScoreChapitreDTO> getScoreChapitreList() {
 		return scoreChapitreList;
 	}
 
 
-	public void setScoreChapitreList(List<ScoreChapitreDto> scoreChapitreList) {
+	public void setScoreChapitreList(List<ScoreChapitreDTO> scoreChapitreList) {
 		this.scoreChapitreList = scoreChapitreList;
 	} 
     
