@@ -1,4 +1,4 @@
-package com.projet.ihm.controller.dto;
+package com.projet.ihm.controller.request.dto;
 
 import java.util.Date;
 

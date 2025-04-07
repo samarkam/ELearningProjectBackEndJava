@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.ihm.repo.UserRepository;
+import com.projet.ihm.repo.model.Administrateur;
+import com.projet.ihm.repo.model.Enseignant;
+import com.projet.ihm.repo.model.Etudiant;
 import com.projet.ihm.repo.model.Utilisateur;
 
 @Service
@@ -32,7 +35,21 @@ public class UserService {
     	return userRepository.getIsBlocked(id) ;
     }
 
-    
+    public Utilisateur.userRole getUserRoleByEmail(String email) {
+    	  Utilisateur user =userRepository.findByEmail(email);
+        if(user==null) {
+        	return null;
+        	
+        }
+        if(user  instanceof Administrateur) {
+        	return Utilisateur.userRole.ADMINISTRATEUR;
+        }else if(user  instanceof Enseignant) {
+        	return Utilisateur.userRole.ENSEIGNANT;
+        }else if(user  instanceof Etudiant) {
+        	return Utilisateur.userRole.ETUDIANT;
+        }
+    	return null;
+    } 
     
     public boolean updateIsBlocked(Long id, Boolean isBlocked) {
     	if(isBlocked == null ) {

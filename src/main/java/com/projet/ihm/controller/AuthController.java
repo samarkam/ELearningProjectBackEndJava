@@ -53,7 +53,7 @@ public class AuthController {
  		  if(utilisateur  instanceof Administrateur) {
  		  		return ResponseEntity.ok(AdministrateurDto.map((Administrateur)utilisateur));
  		  }else if(utilisateur  instanceof Etudiant) {
-		  		return ResponseEntity.ok(EtudiantDto.map((Etudiant)utilisateur));
+		  		return ResponseEntity.ok(EtudiantDto.mapWithInscriptionAndScoreChapters((Etudiant)utilisateur));
 		  }else if(utilisateur  instanceof Enseignant) {
 		  		return ResponseEntity.ok(EnseignantDto.map((Enseignant)utilisateur));
 		  }
