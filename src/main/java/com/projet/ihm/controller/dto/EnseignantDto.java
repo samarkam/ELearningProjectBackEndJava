@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.projet.ihm.controller.dto.cours.CoursDTO;
 import com.projet.ihm.repo.model.Enseignant;
 
 
@@ -29,12 +30,12 @@ public class EnseignantDto {
 	
 	private String specialite;
 
-    private List<CoursDto> coursList;
+    private List<CoursDTO> coursList;
     
     private boolean isBlocked;
 
 	public EnseignantDto(Long id, String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details, boolean isBlocked,String matricule, String specialite,List<CoursDto> coursList) {
+			String email, String details, boolean isBlocked,String matricule, String specialite,List<CoursDTO> coursList) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -50,12 +51,17 @@ public class EnseignantDto {
 		this.coursList = coursList;
 	}
 
-	
 	public static EnseignantDto map(Enseignant utilisateur) {
 		return utilisateur == null ? null : new EnseignantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
 				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
 				utilisateur.getMatricule(),utilisateur.getSpecialite(),
-				utilisateur.getCoursList() == null ?null:utilisateur.getCoursList().stream().map(CoursDto::map).collect(Collectors.toList()));
+				null);
+	}
+	public static EnseignantDto mapWithCours(Enseignant utilisateur) {
+		return utilisateur == null ? null : new EnseignantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
+				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
+				utilisateur.getMatricule(),utilisateur.getSpecialite(),
+				utilisateur.getCoursList() == null ?null:utilisateur.getCoursList().stream().map(CoursDTO::map).collect(Collectors.toList()));
 	}
 	
 	public Long getId() {
@@ -151,12 +157,12 @@ public class EnseignantDto {
 	}
 
 
-	public List<CoursDto> getCoursList() {
+	public List<CoursDTO> getCoursList() {
 		return coursList;
 	}
 
 
-	public void setCoursList(List<CoursDto> coursList) {
+	public void setCoursList(List<CoursDTO> coursList) {
 		this.coursList = coursList;
 	}
 

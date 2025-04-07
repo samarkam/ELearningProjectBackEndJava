@@ -30,7 +30,7 @@ public class Chapitre  extends AbstractEntity{
     private int maxScore; 
 	
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique=true)
     private int ordre;
 	
     @OneToMany(mappedBy = "chapitre")
