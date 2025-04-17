@@ -3,6 +3,7 @@ package com.projet.ihm.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,7 +75,7 @@ public class EtudiantController {
 	    }
 	    
 	    @Operation(summary = "Update user", description = "Update a  user in the system")
-	    @PutMapping(value="/update")
+	    @PutMapping(value="/update"  )
 	    public ResponseEntity<?> updateUser(@RequestBody EtudiantRequestDto user) {
 	    	
 	    	Etudiant utilisateur =  userService.getUserById(user.getId()) ;
@@ -82,14 +83,33 @@ public class EtudiantController {
 	 	   if(utilisateur==null) {
 	 		   return ResponseEntity.badRequest().body("User was not found");
 	 	   }
-	    	utilisateur.setNom(user.getNom());
-	    	utilisateur.setPrenom(user.getPrenom());
-	    	utilisateur.setEmail(user.getEmail());
-	    	utilisateur.setTelephone(user.getTelephone());
-	    	utilisateur.setDateDeNaissance(user.getDateDeNaissance());
-	    	utilisateur.setPassword(user.getPassword());
-	    	utilisateur.setDetails(user.getDetails());
-	    	utilisateur.setNiveauEtude(user.getNiveauEtude());
+	 	  if (StringUtils.isNotBlank(user.getNom())) {
+	 		    utilisateur.setNom(user.getNom());
+	 		}
+	 		if (StringUtils.isNotBlank(user.getPrenom())) {
+	 		    utilisateur.setPrenom(user.getPrenom());
+	 		}
+	 		if (StringUtils.isNotBlank(user.getEmail())) {
+	 		    utilisateur.setEmail(user.getEmail());
+	 		}
+	 		if (StringUtils.isNotBlank(user.getTelephone())) {
+	 		    utilisateur.setTelephone(user.getTelephone());
+	 		}
+	 		if (user.getDateDeNaissance() != null) {
+	 		    utilisateur.setDateDeNaissance(user.getDateDeNaissance());
+	 		}
+	 		if (StringUtils.isNotBlank(user.getPassword())) {
+	 		    utilisateur.setPassword(user.getPassword());
+	 		}
+	 		if (StringUtils.isNotBlank(user.getDetails())) {
+	 		    utilisateur.setDetails(user.getDetails());
+	 		}
+	 		if (StringUtils.isNotBlank(user.getNiveauEtude())) {
+	 		    utilisateur.setNiveauEtude(user.getNiveauEtude());
+	 		}
+	 		if (StringUtils.isNotBlank(user.getImage())) {
+	 		    utilisateur.setImage(user.getImage());
+	 		}
 	    	
 	    	try {
 		   		Etudiant savedUser =  userService.updateUser(utilisateur);

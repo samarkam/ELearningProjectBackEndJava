@@ -21,6 +21,8 @@ public class EtudiantRequestDto {
 
     private String email;
     
+    private String image;
+    
     private String details;
 
     private String niveauEtude;
@@ -28,7 +30,7 @@ public class EtudiantRequestDto {
   
 
 	public EtudiantRequestDto(Long id, String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details,String niveauEtude) {
+			String email,String image, String details,String niveauEtude) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -37,6 +39,7 @@ public class EtudiantRequestDto {
 		this.dateDeNaissance = dateDeNaissance;
 		this.password = password;
 		this.email = email;
+		this.image = image;
 		this.details = details;
 		this.niveauEtude = niveauEtude;
 
@@ -45,7 +48,7 @@ public class EtudiantRequestDto {
 	
 	public static EtudiantRequestDto map(Etudiant utilisateur) {
 		return utilisateur == null ? null : new EtudiantRequestDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
-				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), 
+				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(),utilisateur.getImage(), utilisateur.getDetails(), 
 				utilisateur.getNiveauEtude());
 	}
 	
@@ -122,6 +125,16 @@ public class EtudiantRequestDto {
 
 	public void setNiveauEtude(String niveauEtude) {
 		this.niveauEtude = niveauEtude;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

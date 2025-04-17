@@ -10,6 +10,9 @@ import com.projet.ihm.repo.model.Etudiant;
 
 
 public class EtudiantDto {
+	
+	private String accountType;
+
 
     private Long id;
     
@@ -23,6 +26,8 @@ public class EtudiantDto {
 	 
     private String password;
 
+    private String image;
+
     private String email;
     
     private String details;
@@ -34,8 +39,10 @@ public class EtudiantDto {
     private List<ScoreChapitreDTO> scoreChapitreList;
     private boolean isBlocked;
 
-	public EtudiantDto(Long id, String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details, boolean isBlocked,String niveauEtude,List<InscriptionCoursDto> inscriptionCoursList,List<ScoreChapitreDTO> scoreChapitreList) {
+	public EtudiantDto(Long id, String nom, String prenom, 
+			String telephone, Date dateDeNaissance, String password,
+			String email, String details, String image,
+			boolean isBlocked,String niveauEtude,List<InscriptionCoursDto> inscriptionCoursList,List<ScoreChapitreDTO> scoreChapitreList) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -43,25 +50,32 @@ public class EtudiantDto {
 		this.telephone = telephone;
 		this.dateDeNaissance = dateDeNaissance;
 		this.password = password;
+		this.image = image;
 		this.email = email;
 		this.details = details;
 		this.isBlocked = isBlocked;
 		this.niveauEtude = niveauEtude;
 		this.inscriptionCoursList = inscriptionCoursList;
 		this.scoreChapitreList = scoreChapitreList;
+		this.accountType = "Student";
+
 	}
 
 	
 	public static EtudiantDto mapWithInscriptionAndScoreChapters(Etudiant utilisateur) {
-		return utilisateur == null ? null : new EtudiantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
-				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
+		return utilisateur == null ? null : new EtudiantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), 
+				utilisateur.getTelephone(), 
+				utilisateur.getDateDeNaissance(),
+				utilisateur.getPassword() , utilisateur.getEmail(), utilisateur.getDetails(), 
+				utilisateur.getImage(),utilisateur.isBlocked(),
 				utilisateur.getNiveauEtude(),
 				utilisateur.getInscriptionCoursList() == null ? null : utilisateur.getInscriptionCoursList().stream().map(InscriptionCoursDto::map).collect(Collectors.toList()),
 				utilisateur.getScoreChapitreList()	==null ? null : 	utilisateur.getScoreChapitreList().stream().map(ScoreChapitreDTO::map).collect(Collectors.toList()));
 	}
 	public static EtudiantDto map(Etudiant utilisateur) {
 		return utilisateur == null ? null : new EtudiantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
-				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
+				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(),
+				utilisateur.getImage(),utilisateur.isBlocked(),
 				utilisateur.getNiveauEtude(),
 				null,null);
 	}
@@ -166,6 +180,26 @@ public class EtudiantDto {
 
 	public void setScoreChapitreList(List<ScoreChapitreDTO> scoreChapitreList) {
 		this.scoreChapitreList = scoreChapitreList;
+	}
+
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	} 
     
     

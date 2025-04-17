@@ -6,12 +6,16 @@ import com.projet.ihm.repo.model.Administrateur;
 
 
 public class AdministrateurDto {
+	
+	private String accountType;
+
 
     private Long id;
     
     private String nom;
 
     private String prenom; 
+    private String image; 
 
     private String telephone; 
 
@@ -25,22 +29,25 @@ public class AdministrateurDto {
 
 
 	public AdministrateurDto(Long id, String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details) {
+			String email, String details,String image) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.image = image;
 		this.telephone = telephone;
 		this.dateDeNaissance = dateDeNaissance;
 		this.password = password;
 		this.email = email;
 		this.details = details;
+		this.accountType = "Admin";
+
 	}
 
 	
 	public static AdministrateurDto map(Administrateur utilisateur) {
 		return utilisateur == null ? null : new AdministrateurDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
-				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails());
+				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(),utilisateur.getImage());
 	}
 	
 	public Long getId() {
@@ -105,6 +112,26 @@ public class AdministrateurDto {
 
 	public void setDetails(String details) {
 		this.details = details;
+	}
+
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	

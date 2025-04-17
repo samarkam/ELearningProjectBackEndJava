@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -109,13 +110,12 @@ public class CoursService {
                     .map(CoursDTO::mapFullCours)
                     .collect(Collectors.toList());
         } else  if (Utilisateur.userRole.ETUDIANT.equals(userRole)) {
-        	List<InscriptionCours> list=  ((Etudiant) user).getInscriptionCoursList();
+        	Set<InscriptionCours> list=  ((Etudiant) user).getInscriptionCoursList();
              if(list==null || list.isEmpty()) {
             	 return Collections.emptyList();
              }
              
              return list.stream()
-                     .map(InscriptionCours::getCours)
                      .map(CoursDTO::mapFullCours) 
                      .collect(Collectors.toList());
              

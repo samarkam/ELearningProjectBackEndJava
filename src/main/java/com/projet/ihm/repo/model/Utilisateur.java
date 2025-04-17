@@ -45,6 +45,8 @@ public class Utilisateur extends AbstractEntity {
     	ADMINISTRATEUR,ETUDIANT,ENSEIGNANT 
     }
 
+    @Column(nullable = false)
+    private String image; 
     
     
     
@@ -55,7 +57,14 @@ public class Utilisateur extends AbstractEntity {
     
     
     
-    
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public String getNom() {
 		return nom;
 	}

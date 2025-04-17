@@ -1,6 +1,7 @@
 package com.projet.ihm.repo.model;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -22,7 +23,7 @@ public class Etudiant extends Utilisateur {
 
 	
     @OneToMany(mappedBy = "etudiant")
-    private List<InscriptionCours> inscriptionCoursList;
+    private Set<InscriptionCours> inscriptionCoursList;
 
     @OneToMany(mappedBy = "etudiant")
     private List<ScoreChapitre> scoreChapitreList;
@@ -46,11 +47,11 @@ public class Etudiant extends Utilisateur {
 		this.niveauEtude = niveauEtude;
 	}
 
-	public List<InscriptionCours> getInscriptionCoursList() {
+	public Set<InscriptionCours> getInscriptionCoursList() {
 		return inscriptionCoursList;
 	}
 
-	public void setInscriptionCoursList(List<InscriptionCours> inscriptionCoursList) {
+	public void setInscriptionCoursList(Set<InscriptionCours> inscriptionCoursList) {
 		this.inscriptionCoursList = inscriptionCoursList;
 	}
 

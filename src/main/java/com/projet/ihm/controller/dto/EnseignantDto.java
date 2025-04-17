@@ -9,12 +9,16 @@ import com.projet.ihm.repo.model.Enseignant;
 
 
 public class EnseignantDto {
+	
+	private String accountType;
+
 
     private Long id;
     
     private String nom;
 
     private String prenom; 
+    private String image; 
 
     private String telephone; 
 
@@ -35,11 +39,12 @@ public class EnseignantDto {
     private boolean isBlocked;
 
 	public EnseignantDto(Long id, String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details, boolean isBlocked,String matricule, String specialite,List<CoursDTO> coursList) {
+			String email, String details,String image, boolean isBlocked,String matricule, String specialite,List<CoursDTO> coursList) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.image = image;
 		this.telephone = telephone;
 		this.dateDeNaissance = dateDeNaissance;
 		this.password = password;
@@ -49,17 +54,21 @@ public class EnseignantDto {
 		this.matricule = matricule;
 		this.specialite = specialite;
 		this.coursList = coursList;
+		this.accountType = "Instructor";
+		
 	}
 
 	public static EnseignantDto map(Enseignant utilisateur) {
 		return utilisateur == null ? null : new EnseignantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
-				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
+				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(),
+				utilisateur.getImage(),utilisateur.isBlocked(),
 				utilisateur.getMatricule(),utilisateur.getSpecialite(),
 				null);
 	}
 	public static EnseignantDto mapWithCours(Enseignant utilisateur) {
 		return utilisateur == null ? null : new EnseignantDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
-				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(), utilisateur.isBlocked(),
+				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(),
+				utilisateur.getImage(),utilisateur.isBlocked(),
 				utilisateur.getMatricule(),utilisateur.getSpecialite(),
 				utilisateur.getCoursList() == null ?null:utilisateur.getCoursList().stream().map(CoursDTO::map).collect(Collectors.toList()));
 	}
@@ -164,6 +173,22 @@ public class EnseignantDto {
 
 	public void setCoursList(List<CoursDTO> coursList) {
 		this.coursList = coursList;
+	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

@@ -5,9 +5,8 @@ import java.util.stream.Collectors;
 
 import com.projet.ihm.controller.dto.EnseignantDto;
 import com.projet.ihm.repo.model.Cours;
-import com.projet.ihm.repo.model.InscriptionCours;
 
-public class CoursDTO {
+public class CoursLightDTO {
 	
 	private Long id;
     private String titre;
@@ -17,13 +16,12 @@ public class CoursDTO {
     private boolean isActive;
     private int maxScore;
     private EnseignantDto enseignant; // Optional, depending on use case
-    private SpecialiteDto specialite; // Optional
     private List<ChapitreDTO> chapitres; // For full version
 
     // Constructors
-    public CoursDTO() {}
+    public CoursLightDTO() {}
 
-    public CoursDTO(Long id, String titre, String description, String image, boolean isActive, boolean isPublished) { // Light version
+    public CoursLightDTO(Long id, String titre, String description, String image, boolean isActive, boolean isPublished) { // Light version
         this.id = id;
         this.titre = titre;
     	this.description = description;
@@ -32,7 +30,7 @@ public class CoursDTO {
         this.isPublished = isPublished;
     }
 	
-	public CoursDTO(Long id, String titre, String description, String image, boolean isActive,boolean isPublished, 
+	public CoursLightDTO(Long id, String titre, String description, String image, boolean isActive,boolean isPublished, 
 			int maxScore, EnseignantDto enseignant, SpecialiteDto specialite, List<ChapitreDTO> chapitres) {
 		super();
 		this.id = id;
@@ -43,23 +41,15 @@ public class CoursDTO {
 		this.isActive = isActive;
 		this.maxScore = maxScore;
 		this.enseignant = enseignant;
-		this.specialite = specialite;
 		this.chapitres = chapitres;
 	}
-	public static CoursDTO map(Cours cours) {
-		return cours == null ? null : new CoursDTO(cours.getId(),cours.getTitre(),cours.getDescription(),cours.getImage(),cours.isActive(),cours.isPublished());
+	public static CoursLightDTO map(Cours cours) {
+		return cours == null ? null : new CoursLightDTO(cours.getId(),cours.getTitre(),cours.getDescription(),cours.getImage(),cours.isActive(),cours.isPublished());
 	}
 
-	public static CoursDTO mapFullCours(Cours cours) {
-		return cours == null ? null : new CoursDTO(cours.getId(),cours.getTitre(),cours.getDescription(),cours.getImage(),cours.isActive(),cours.isPublished(),
+	public static CoursLightDTO mapFullCours(Cours cours) {
+		return cours == null ? null : new CoursLightDTO(cours.getId(),cours.getTitre(),cours.getDescription(),cours.getImage(),cours.isActive(),cours.isPublished(),
 				cours.getMaxScore(),cours.getEnseignant()==null? null :  EnseignantDto.map(cours.getEnseignant())
-				,cours.getSpecialite()==null ? null : SpecialiteDto.map(cours.getSpecialite())
-				,cours.getChapitreList() == null ? null : cours.getChapitreList().stream().map(ChapitreDTO::map).collect(Collectors.toList()));
-	}
-	public static CoursDTO mapFullCours( InscriptionCours inscriptionCours ) {
-		Cours cours = inscriptionCours.getCours();
-		return cours == null ? null : new CoursDTO(cours.getId(),cours.getTitre(),cours.getDescription(),cours.getImage(),cours.isActive(),cours.isPublished(),
-				inscriptionCours.getTotalScore(),cours.getEnseignant()==null? null :  EnseignantDto.map(cours.getEnseignant())
 				,cours.getSpecialite()==null ? null : SpecialiteDto.map(cours.getSpecialite())
 				,cours.getChapitreList() == null ? null : cours.getChapitreList().stream().map(ChapitreDTO::map).collect(Collectors.toList()));
 	}
@@ -129,13 +119,6 @@ public class CoursDTO {
 		this.enseignant = enseignant;
 	}
 
-	public SpecialiteDto getSpecialite() {
-		return specialite;
-	}
-
-	public void setSpecialite(SpecialiteDto specialite) {
-		this.specialite = specialite;
-	}
 
 	public List<ChapitreDTO> getChapitres() {
 		return chapitres;
