@@ -1,0 +1,14 @@
+# Ignore build output
+/target/
+
+# Eclipse files
+*.classpath
+*.project
+*.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
