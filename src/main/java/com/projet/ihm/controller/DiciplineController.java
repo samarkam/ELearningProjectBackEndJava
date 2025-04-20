@@ -46,7 +46,7 @@ public class DiciplineController {
     public ResponseEntity<List<DiciplineDTO>> getAllDiciplines() {
         List<Dicipline> diciplines = specialiteDiciplineService.getAllDiciplines();
         return ResponseEntity.ok(diciplines == null || diciplines.isEmpty() ? null : 
-                                 diciplines.stream().map(DiciplineDTO::map).collect(Collectors.toList()));
+                                 diciplines.stream().map(DiciplineDTO::mapWithSpecialiteList).collect(Collectors.toList()));
     }
 
     @Operation(summary = "Get a dicipline by ID")
@@ -54,7 +54,7 @@ public class DiciplineController {
     public ResponseEntity<?> getDiciplineById(@PathVariable Long id) {
         try {
             Dicipline dicipline = specialiteDiciplineService.getDiciplineById(id);
-            return ResponseEntity.ok(DiciplineDTO.map(dicipline));
+            return ResponseEntity.ok(DiciplineDTO.mapWithSpecialiteList(dicipline));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
