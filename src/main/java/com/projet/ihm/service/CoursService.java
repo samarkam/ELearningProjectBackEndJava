@@ -231,7 +231,7 @@ public class CoursService {
         if(cours==null) {
         	throw new RuntimeException("Course not found");
         }
-        if(getChapitreByOrder(chapitreDTO.getOrdre(),chapitreDTO.getCoursId()) != null ) {
+        if(getChapitreByOrder(chapitreDTO.getOrdre(),chapitreDTO.getCoursId()) != null  &&  getChapitreByOrder(chapitreDTO.getOrdre(),chapitreDTO.getCoursId()).getId() !=  id ) {
 			throw new RuntimeException("Chapitre ordre already exists");
 
     	}

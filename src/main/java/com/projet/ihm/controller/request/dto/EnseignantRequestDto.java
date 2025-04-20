@@ -26,11 +26,14 @@ public class EnseignantRequestDto {
 	private String matricule;
 	
 	private String specialite;
+	
+	private String image;
+
 
 
 
 	public EnseignantRequestDto(Long id, String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details,String matricule, String specialite) {
+			String email, String details,String matricule, String specialite,String image) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -42,13 +45,14 @@ public class EnseignantRequestDto {
 		this.details = details;
 		this.matricule = matricule;
 		this.specialite = specialite;
+		this.image = image;
 	}
 
 	
 	public static EnseignantRequestDto map(Enseignant utilisateur) {
 		return utilisateur == null ? null : new EnseignantRequestDto(utilisateur.getId(),  utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getTelephone(), 
 				utilisateur.getDateDeNaissance(), utilisateur.getPassword(), utilisateur.getEmail(), utilisateur.getDetails(),
-				utilisateur.getMatricule(),utilisateur.getSpecialite()
+				utilisateur.getMatricule(),utilisateur.getSpecialite(), utilisateur.getImage()
 				);
 	}
 	
@@ -134,6 +138,16 @@ public class EnseignantRequestDto {
 
 	public void setSpecialite(String specialite) {
 		this.specialite = specialite;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

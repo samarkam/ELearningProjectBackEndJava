@@ -26,11 +26,12 @@ public class UtilisateurRequestDto {
 
 	  private String niveauEtude;
 	  
-	
+	    private String image; 
+
 
 
 	public UtilisateurRequestDto(String nom, String prenom, String telephone, Date dateDeNaissance, String password,
-			String email, String details, String matricule, String specialite, String niveauEtude) {
+			String email, String details, String matricule, String specialite, String niveauEtude, String image) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -42,6 +43,8 @@ public class UtilisateurRequestDto {
 		this.matricule = matricule;
 		this.specialite = specialite;
 		this.niveauEtude = niveauEtude;
+		this.image = image;
+
 	}
 
 	public String getNom() {
@@ -122,6 +125,14 @@ public class UtilisateurRequestDto {
 
 	public void setNiveauEtude(String niveauEtude) {
 		this.niveauEtude = niveauEtude;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 
