@@ -9,6 +9,6 @@ import com.projet.ihm.repo.model.Cours;
 
 @Repository
 public interface ChapitreRepository extends AbstractRepository<Chapitre, Long> {
-	Chapitre findByOrdre(int ordre);
+	Chapitre findByOrdreAndCours(int ordre,Cours cours );
 	List<Chapitre> findByCours (Cours cours );
 }

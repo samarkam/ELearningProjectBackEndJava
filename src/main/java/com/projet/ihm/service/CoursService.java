@@ -193,7 +193,7 @@ public class CoursService {
 
     
     @Transactional
-    public ChapitreDTO createChapitre( ChapitreRequestDTO chapitreDTO) {
+    public CoursDTO createChapitre( ChapitreRequestDTO chapitreDTO) {
     	if(chapitreDTO == null) {
         	throw new RuntimeException("chapitreDTO not found");
     	}
@@ -201,7 +201,7 @@ public class CoursService {
         if(cours==null) {
         	throw new RuntimeException("Course not found");
         }
-        if(getChapitreByOrder(chapitreDTO.getOrdre()) != null ) {
+        if(getChapitreByOrder(chapitreDTO.getOrdre(),chapitreDTO.getCoursId()) != null ) {
 			throw new RuntimeException("Chapitre ordre already exists");
 
     	}
@@ -211,13 +211,15 @@ public class CoursService {
         chapitre.setDescription(chapitreDTO.getDescription());
         chapitre.setMaxScore(chapitreDTO.getMaxScore());
         chapitre.setCours(cours);
-        return ChapitreDTO.map(chapitreRepository.save(chapitre));
+        chapitreRepository.save(chapitre);
+        cours = getCoursById(chapitreDTO.getCoursId());
+        return CoursDTO.mapFullCours(cours);
     }
     
     
     
     @Transactional
-    public ChapitreDTO updateChapitre(Long id, ChapitreRequestDTO chapitreDTO) {
+    public CoursDTO updateChapitre(Long id, ChapitreRequestDTO chapitreDTO) {
     	if(chapitreDTO == null|| id ==null) {
         	throw new RuntimeException("chapitreDTO ou id not found");
     	}
@@ -229,7 +231,7 @@ public class CoursService {
         if(cours==null) {
         	throw new RuntimeException("Course not found");
         }
-        if(getChapitreByOrder(chapitreDTO.getOrdre()) != null ) {
+        if(getChapitreByOrder(chapitreDTO.getOrdre(),chapitreDTO.getCoursId()) != null ) {
 			throw new RuntimeException("Chapitre ordre already exists");
 
     	}
@@ -238,12 +240,13 @@ public class CoursService {
         chapitre.setDescription(chapitreDTO.getDescription());
         chapitre.setMaxScore(chapitreDTO.getMaxScore());
         chapitre.setCours(cours);
-        return ChapitreDTO.map(chapitreRepository.save(chapitre));
-    }
+        chapitreRepository.save(chapitre);
+        cours = getCoursById(chapitreDTO.getCoursId());
+        return CoursDTO.mapFullCours(cours);    }
     
     
     @Transactional
-    public ResourceDTO createRessource( ResourceRequestDTO resourceDTO) {
+    public ChapitreDTO createRessource( ResourceRequestDTO resourceDTO) {
     	if(resourceDTO == null) {
         	throw new RuntimeException("resourceDTO not found");
     	}
@@ -267,7 +270,9 @@ public class CoursService {
         resource.setDescription(resourceDTO.getDescription());
         resource.setTypeRessource(Ressource.TypeRessource.getType(resourceDTO.getTypeRessource().toUpperCase()));
         resource.setChapitre(chapitre);
-        return ResourceDTO.map(resourceRepository.save(resource));
+        resourceRepository.save(resource);
+        chapitre =  getChapitreById(resourceDTO.getChapitreId());
+        return ChapitreDTO.mapWithResourceList(chapitre);
     }
     
     
@@ -403,8 +408,8 @@ public class CoursService {
         return QuizDTO.mapWithQuestions(quiz);
     }
 
-    public Chapitre getChapitreByOrder(int ordre) {
-        return chapitreRepository.findByOrdre(ordre)  ;
+    public Chapitre getChapitreByOrder(int ordre,Long courseId) {
+        return chapitreRepository.findByOrdreAndCours(ordre, getCoursById(courseId) )  ;
     } 
     public Cours getCoursById(Long id) {
     	Optional<Cours> optional = coursRepository.findById(id) ;
@@ -454,18 +459,25 @@ public class CoursService {
     
     
     public InscriptionCoursDto inscriptionCours(Long etudiantId, Long coursId) {
-    	 Etudiant etudiant = etudiantService.getUserById(etudiantId);
-    	 if(etudiant==null) {
-           	throw new RuntimeException("Etudiant not found");
-           }
-    	  Cours cours = getCoursById(coursId);
-          if(cours==null) {
-          	throw new RuntimeException("Course not found");
-          }
-    	InscriptionCours inscriptionCours = new InscriptionCours();
-    	inscriptionCours.setCours(cours);
-    	inscriptionCours.setEtudiant(etudiant);
-    	inscriptionCours.setTotalScore(0);
+    	Etudiant etudiant = etudiantService.getUserById(etudiantId);
+    	if(etudiant==null) {
+    		throw new RuntimeException("Etudiant not found");
+    	}
+    	Cours cours = getCoursById(coursId);
+    	if(cours==null) {
+    		throw new RuntimeException("Course not found");
+    	}
+    	InscriptionCours inscriptionCours = inscriptionCoursRepository.findByEtudiantAndCours( etudiant,  cours);
+    	if(inscriptionCours==null) {
+    		inscriptionCours = new InscriptionCours();
+    		inscriptionCours.setCours(cours);
+    		inscriptionCours.setEtudiant(etudiant);
+    		inscriptionCours.setTotalScore(0);
+    	}else {
+    		inscriptionCours.setTotalScore(100);
+    	}
+    	
+    	
     	
     	return InscriptionCoursDto.map(inscriptionCoursRepository.save(inscriptionCours));
     }

@@ -54,14 +54,14 @@ public class CoursDTO {
 		return cours == null ? null : new CoursDTO(cours.getId(),cours.getTitre(),cours.getDescription(),cours.getImage(),cours.isActive(),cours.isPublished(),
 				cours.getMaxScore(),cours.getEnseignant()==null? null :  EnseignantDto.map(cours.getEnseignant())
 				,cours.getSpecialite()==null ? null : SpecialiteDto.map(cours.getSpecialite())
-				,cours.getChapitreList() == null ? null : cours.getChapitreList().stream().map(ChapitreDTO::map).collect(Collectors.toList()));
+				,cours.getChapitreList() == null ? null : cours.getChapitreList().stream().map(ChapitreDTO::mapWithResourceList).collect(Collectors.toList()));
 	}
 	public static CoursDTO mapFullCours( InscriptionCours inscriptionCours ) {
 		Cours cours = inscriptionCours.getCours();
 		return cours == null ? null : new CoursDTO(cours.getId(),cours.getTitre(),cours.getDescription(),cours.getImage(),cours.isActive(),cours.isPublished(),
 				inscriptionCours.getTotalScore(),cours.getEnseignant()==null? null :  EnseignantDto.map(cours.getEnseignant())
 				,cours.getSpecialite()==null ? null : SpecialiteDto.map(cours.getSpecialite())
-				,cours.getChapitreList() == null ? null : cours.getChapitreList().stream().map(ChapitreDTO::map).collect(Collectors.toList()));
+				,cours.getChapitreList() == null ? null : cours.getChapitreList().stream().map(ChapitreDTO::mapWithResourceList).collect(Collectors.toList()));
 	}
 
 	public Long getId() {

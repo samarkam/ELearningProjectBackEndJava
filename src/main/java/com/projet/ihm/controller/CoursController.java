@@ -94,7 +94,7 @@ public class CoursController {
     @PostMapping("/chapitre/new")
     public ResponseEntity<?> createChapitre(@RequestBody ChapitreRequestDTO chapitreDTO) {
     	try {
-    		ChapitreDTO cours= coursService.createChapitre(chapitreDTO);
+    		CoursDTO cours= coursService.createChapitre(chapitreDTO);
 			return  ResponseEntity.ok(cours);
 		} catch (RuntimeException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -106,7 +106,7 @@ public class CoursController {
     @PutMapping("/chapitre/{id}")
     public ResponseEntity<?> updateChapitre(@PathVariable Long id,@RequestBody ChapitreRequestDTO chapitreDTO) {
     	try {
-    		ChapitreDTO cours= coursService.updateChapitre(id, chapitreDTO);
+    		CoursDTO cours= coursService.updateChapitre(id, chapitreDTO);
 			return  ResponseEntity.ok(cours);
 		} catch (RuntimeException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -118,8 +118,8 @@ public class CoursController {
     @PostMapping("/resource/new")
     public ResponseEntity<?> createResource(@RequestBody ResourceRequestDTO chapitreDTO) {
     	try {
-    		ResourceDTO cours= coursService.createRessource(chapitreDTO);
-			return  ResponseEntity.ok(cours);
+    		ChapitreDTO ChapitreDTO= coursService.createRessource(chapitreDTO);
+			return  ResponseEntity.ok(ChapitreDTO);
 		} catch (RuntimeException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
