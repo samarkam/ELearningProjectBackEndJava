@@ -431,6 +431,12 @@ public class CoursService {
     	Optional<Quiz> optional = quizRepository.findById(id) ;
         return optional.isPresent() ? optional.get(): null;
     }
+    
+    public Quiz getQuizByChapterId(Long chapterId) {
+    	Chapitre chapitre = getChapitreById(chapterId);
+    	Quiz quiz = quizRepository.findByChapitre(chapitre) ;
+        return quiz == null  ? null : quiz;
+    }
     public boolean updateIsActive(Long id, Boolean isActive) {
     	if(isActive == null ) {
             return false;

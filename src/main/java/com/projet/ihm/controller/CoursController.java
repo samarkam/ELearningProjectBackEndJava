@@ -25,6 +25,7 @@ import com.projet.ihm.controller.request.dto.ChapitreRequestDTO;
 import com.projet.ihm.controller.request.dto.CoursRequestDTO;
 import com.projet.ihm.controller.request.dto.QuizRequestDTO;
 import com.projet.ihm.controller.request.dto.ResourceRequestDTO;
+import com.projet.ihm.repo.model.Quiz;
 import com.projet.ihm.service.CoursService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -150,6 +151,30 @@ public class CoursController {
        
     }
     
+    @Operation(summary = "Get Quiz")
+    @GetMapping("/quiz/{id}")
+    public ResponseEntity<?> getQuiz(@PathVariable Long id) {
+    	try {
+    		Quiz quiz= coursService.getQuizById(id);
+			return  ResponseEntity.ok(QuizDTO.mapWithQuestions(quiz));
+		} catch (RuntimeException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+
+    }
+    
+    
+    @Operation(summary = "Get Quiz by chapter id ")
+    @GetMapping("/quiz")
+    public ResponseEntity<?> getQuizByChapterId(@RequestParam(name = "chapId" , required = true) Long chapId) {
+    	try {
+    		Quiz quiz= coursService.getQuizByChapterId(chapId);
+			return  ResponseEntity.ok(QuizDTO.mapWithQuestions(quiz));
+		} catch (RuntimeException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+
+    }
     @Operation(summary = "Update a  Quiz (teacher only)")
     @PutMapping("/quiz/{id}")
     public ResponseEntity<?> updateQuiz(@PathVariable Long id,@RequestBody QuizRequestDTO chapitreDTO) {
